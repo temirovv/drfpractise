@@ -9,7 +9,8 @@ __pycache__/
 
 apps/migrations
 products/migrations
-
+users/migrations
+media/
 
 # Distribution / packaging
 .Python

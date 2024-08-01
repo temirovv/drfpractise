@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # my apps
     'apps.apps.AppsConfig',
     'products.apps.ProductsConfig',
-    'users.apps.UsersConfig',
+    'users',
 
     # 3rd party apps
     'rest_framework',
@@ -122,6 +122,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
