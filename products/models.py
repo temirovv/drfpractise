@@ -4,6 +4,9 @@ from django.db.models import Model, CharField, TextField, FloatField, ForeignKey
 from django.utils.text import slugify
 from django.utils.timezone import now
 
+from mptt.models import MPTTModel, TreeForeignKey
+
+
 User = get_user_model()
 
 
@@ -32,7 +35,12 @@ class BaseSlugModel(Model):
         
         super().save(force_insert, force_update, using, update_fields)
 
-class Category(BaseSlugModel):
+
+class Category(MPTTModel, BaseSlugModel):
+    parent = TreeForeignKey('self', on_delete=CASCADE, null=True, blank=True, related_name='children', default=None)
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
     def __str__(self):
         return self.name

@@ -1,7 +1,8 @@
+from pprint import pprint
+
 from .models import Product, Category, ProductImage
 from rest_framework.serializers import ModelSerializer, ListSerializer, SerializerMethodField
 from django.contrib.auth import get_user_model
-
 
 User = get_user_model()
 
@@ -13,9 +14,17 @@ class ProductImageSerializer(ModelSerializer):
 
 
 class CategoryModelSerializer(ModelSerializer):
+    child = SerializerMethodField()
+
+    # name = SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = ('name', )
+        fields = ('name', 'parent', 'child')
+
+    def get_child(self, category):
+        child = category.get_children()
+        return CategoryModelSerializer(child, many=True).data
 
 
 class ProductModelSerializer(ModelSerializer):
@@ -25,8 +34,7 @@ class ProductModelSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('name', 'description', 'price', 'owner', 'image', 'category')
-
+        fields = ('name', 'description', 'price', 'owner', 'image', 'category', 'created_at')
 
     def get_category(self, product):  # noqa
         return product.category.name
