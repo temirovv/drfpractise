@@ -7,10 +7,7 @@ __pycache__/
 # C extensions
 *.so
 
-apps/migrations
-products/migrations
-users/migrations
-media/
+
 
 # Distribution / packaging
 .Python
